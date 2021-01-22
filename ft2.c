@@ -1,4 +1,4 @@
-//flow meter using timer1 without prescalar and 5ms delay 
+//flow meter using timer1 without prescalar and 5ms delay with issue of interrupt1 cleared and reset not  properly working 
 #define F_CPU 8000000UL
 #include<avr/io.h>
 #include<util/delay.h>
@@ -70,7 +70,7 @@ ISR(INT1_vect)
 
 ISR(INT2_vect)
 {
-	EIMSK = 0b00000001;
+	EIMSK = 0b00000001;  //disabled INT2
 	LCD_Clear();
 //	PORTE=~PORTE;		// Toggle PORTE  
 	TCCR1B=0X00;
@@ -83,8 +83,8 @@ ISR(INT2_vect)
 //	LCD_Clear();
 	LCD_String_xy(0,1,"WELCOME TO");
 	LCD_String_xy(1,1,"NETEL FLOWMETER");
-	EIFR=  0b00000100; 
-	EIMSK = 0b00000101;
+	EIFR=  0b00000100; //cleared INT2 FLAG TO REENABLE IT AGAIN
+	EIMSK = 0b00000101; //ENABLED INT2 AND INT0
 	sei();
 }
 
