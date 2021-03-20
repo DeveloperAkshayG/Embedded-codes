@@ -87,6 +87,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(1000);      //this delay is added so as to wait for some time for power and voltage to be stable
   lcd_init ();
   lcd_String_xy (0,0,"WELCOME TO");
   lcd_String_xy (1,0,"NETEL INDIA DSM");
@@ -247,17 +248,17 @@ void lcd_init (void)
 {
 	// 4 bit initialisation
 	lcd_send_cmd (0x33);
-	HAL_Delay(1);
+	HAL_Delay(5);
 	lcd_send_cmd (0x32);
-	HAL_Delay(1);
+	HAL_Delay(5);
 	lcd_send_cmd (0x28);
-	HAL_Delay(1);
+	HAL_Delay(5);
 
   // dislay initialisation
 	lcd_send_cmd (0x0C);  // Display on/off control --> D = 1, C and B = 0. (Cursor and blink, last two bits)
-	HAL_Delay(1);
+	HAL_Delay(5);
 	lcd_send_cmd (0x06); //Entry mode set --> I/D = 1 (increment cursor) & S = 0 (no shift)
-	HAL_Delay(1);
+	HAL_Delay(5);
 	lcd_send_cmd (0x01); //clear display
 }
 
